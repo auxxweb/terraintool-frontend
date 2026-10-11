@@ -29,7 +29,7 @@ Repository settings:
 
 - **Settings → Pages → Source**: `GitHub Actions`.
 - **Settings → Secrets and variables → Actions → Variables**:
-  - `VITE_API_URL` (required): public HTTPS backend URL including `/api`.
+  - `VITE_API_URL` (optional): public HTTPS backend URL including `/api`. Defaults to `https://server.terraintool.com/api`.
   - `VITE_BASE_PATH` (optional): set to `/` when using a custom domain.
 
 The backend must allow CORS from the Pages origin (e.g. `https://<owner>.github.io`).
