@@ -23,16 +23,19 @@ Configure the host to **serve `index.html` for unknown paths** (SPA fallback) so
 
 ### GitHub Pages
 
-`.github/workflows/deploy-pages.yml` builds and deploys on every push to `main`. It sets `VITE_BASE_PATH` to `/<repo-name>/` and copies `index.html` to `404.html` for the SPA fallback.
+`.github/workflows/deploy-pages.yml` builds and deploys on every push to `main` and copies `index.html` to `404.html` for the SPA fallback. The site is served from the root of the custom domain `terraintool.com` (`public/CNAME`).
 
 Repository settings:
 
 - **Settings → Pages → Source**: `GitHub Actions`.
-- **Settings → Secrets and variables → Actions → Variables**:
-  - `VITE_API_URL` (optional): public HTTPS backend URL including `/api`. Defaults to `https://server.terraintool.com/api`.
-  - `VITE_BASE_PATH` (optional): set to `/` when using a custom domain.
+- **Settings → Pages → Custom domain**: `terraintool.com`, with **Enforce HTTPS** enabled.
+- **Settings → Secrets and variables → Actions → Variables** (both optional):
+  - `VITE_API_URL`: public HTTPS backend URL including `/api`. Defaults to `https://server.terraintool.com/api`.
+  - `VITE_BASE_PATH`: defaults to `/`. Set to `/<repo-name>/` only when serving from `https://<owner>.github.io/<repo-name>/` without a custom domain.
 
-The backend must allow CORS from the Pages origin (e.g. `https://<owner>.github.io`).
+DNS: apex `A` records to `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`, and `www` `CNAME` to `<owner>.github.io`.
+
+The backend must allow CORS from `https://terraintool.com` and `https://www.terraintool.com`.
 
 **HTTPS is required** for PWA install and service workers (except `localhost`).
 

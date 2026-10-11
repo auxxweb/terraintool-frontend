@@ -31,8 +31,9 @@ jobs:
         run: npm run build
         env:
           VITE_API_URL: ${{ vars.VITE_API_URL || 'https://server.terraintool.com/api' }}
-          # Repository variable overrides the default; set it to / when using a custom domain.
-          VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH || format('/{0}/', github.event.repository.name) }}
+          # Served from the root of the custom domain (public/CNAME). Set the repository variable to
+          # /<repo-name>/ only if the site is served from https://<owner>.github.io/<repo-name>/ instead.
+          VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH || '/' }}
 
       # GitHub Pages has no SPA rewrites; serving index.html as 404.html lets React Router handle deep links.
       - run: cp dist/index.html dist/404.html
