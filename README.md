@@ -21,6 +21,19 @@ Optional dev proxy: set `VITE_API_URL=/api` so requests go through Vite’s `/ap
 
 Configure the host to **serve `index.html` for unknown paths** (SPA fallback) so React Router deep links work.
 
+### GitHub Pages
+
+`.github/workflows/deploy-pages.yml` builds and deploys on every push to `main`. It sets `VITE_BASE_PATH` to `/<repo-name>/` and copies `index.html` to `404.html` for the SPA fallback.
+
+Repository settings:
+
+- **Settings → Pages → Source**: `GitHub Actions`.
+- **Settings → Secrets and variables → Actions → Variables**:
+  - `VITE_API_URL` (required): public HTTPS backend URL including `/api`.
+  - `VITE_BASE_PATH` (optional): set to `/` when using a custom domain.
+
+The backend must allow CORS from the Pages origin (e.g. `https://<owner>.github.io`).
+
 **HTTPS is required** for PWA install and service workers (except `localhost`).
 
 ## PWA (Progressive Web App)

@@ -59,7 +59,7 @@ api.interceptors.response.use(
       Cookies.remove('role', COOKIE_PATH)
       Cookies.remove('user', COOKIE_PATH)
       Cookies.remove('tenantId', COOKIE_PATH)
-      window.location.href = '/login'
+      window.location.href = `${import.meta.env.BASE_URL}login`
     }
     return Promise.reject(error)
   }

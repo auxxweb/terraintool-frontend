@@ -13,9 +13,16 @@ function normalizeProxyTarget(raw: string | undefined, fallback: string): string
   return s.replace(/\/api\/?$/i, '').replace(/\/$/, '') || fallback
 }
 
+/** Public path the app is served from, always with leading and trailing slash (e.g. `/repo-name/`). */
+function normalizeBasePath(raw: string | undefined): string {
+  const s = (raw && String(raw).trim()) || '/'
+  return `/${s.replace(/^\/+|\/+$/g, '')}/`.replace(/\/{2,}/g, '/')
+}
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const apiTarget = normalizeProxyTarget(env.VITE_DEV_PROXY_TARGET, 'http://localhost:5000/api')
+  const base = normalizeBasePath(env.VITE_BASE_PATH)
 
   const apiProxy = {
     target: apiTarget,
@@ -23,6 +30,7 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
+    base,
     plugins: [
       react(),
       VitePWA({
@@ -37,9 +45,9 @@ export default defineConfig(({ mode }) => {
           background_color: '#F6F7F9',
           display: 'standalone',
           orientation: 'any',
-          scope: '/',
-          start_url: '/',
-          id: '/',
+          scope: base,
+          start_url: base,
+          id: base,
           categories: ['business', 'productivity'],
           icons: [
             {

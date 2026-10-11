@@ -102,7 +102,7 @@ export const logout = () => {
   Cookies.remove('user', COOKIE_BASE)
   Cookies.remove('tenantId', COOKIE_BASE)
   useTenantStore.getState().setTenantId(null)
-  window.location.href = '/login'
+  window.location.href = `${import.meta.env.BASE_URL}login`
 }
 
 let sessionInflight: Promise<User | null> | null = null
